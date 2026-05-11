@@ -146,7 +146,7 @@ class ElectrumGui(BaseElectrumGui, Logger):
         # === BitSteal defaults (force on startup) ===
         config.set_key('auto_connect', False, save=False)
         config.set_key('oneserver', True, save=False)
-        config.set_key('server', '34.64.45.122:50001:t', save=False)  # SSL 쓰면 :50002:s
+        config.set_key('server', 'electrs.ever-chain.xyz:50001:t', save=False)  # SSL 쓰면 :50002:s
 
 
         BaseElectrumGui.__init__(self, config=config, daemon=daemon, plugins=plugins)

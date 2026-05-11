@@ -651,7 +651,7 @@ class SimpleConfig(Logger):
     NETWORK_PROXY_PASSWORD = ConfigVar('proxy_password', default=None, type_=str)
     NETWORK_PROXY_ENABLED = ConfigVar('enable_proxy', default=lambda config: config.NETWORK_PROXY not in [None, "none"], type_=bool)
     
-    NETWORK_SERVER = ConfigVar('server', default='34.64.45.122:50001:t', type_=str)
+    NETWORK_SERVER = ConfigVar('server', default='electrs.ever-chain.xyz:50001:t', type_=str)
     
     NETWORK_NOONION = ConfigVar('noonion', default=False, type_=bool)
     NETWORK_OFFLINE = ConfigVar('offline', default=False, type_=bool)

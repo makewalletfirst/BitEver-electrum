@@ -10,7 +10,13 @@ PROJECT_ROOT="$(dirname "$(readlink -e "$0")")/../.."
 PROJECT_ROOT_OR_FRESHCLONE_ROOT="$PROJECT_ROOT"
 CONTRIB="$PROJECT_ROOT/contrib"
 CONTRIB_WINE="$CONTRIB/build-wine"
+
+# [수정] 현재 폴더 소유자의 UID를 가져오되, 
+# 만약 root(0)라면 빌드 중복 에러 방지를 위해 강제로 1000을 사용하도록 처리할 수 있습니다.
 BUILD_UID=$(/usr/bin/stat -c %u "$PROJECT_ROOT")
+if [ "$BUILD_UID" == "0" ]; then
+    BUILD_UID=1000
+fi
 
 . "$CONTRIB"/build_tools_util.sh
 
@@ -49,15 +55,18 @@ else
 fi
 
 info "building binary..."
-# check uid and maybe chown. see #8261
-if [ ! -z "$ELECBUILD_COMMIT" ] ; then  # fresh clone (reproducible build)
-    if [ $(id -u) != "1000" ] || [ $(id -g) != "1000" ] ; then
-        info "need to chown -R FRESH_CLONE dir. prompting for sudo."
-        sudo chown -R 1000:1000 "$FRESH_CLONE"
-    fi
-fi
+
+# [추가] 빌드 직전 소유권을 다시 한번 확실히 정리 (서브모듈 생성 대비)
+# 호스트가 root이므로 직접 실행 가능합니다.
+chown -R $BUILD_UID:$BUILD_UID "$PROJECT_ROOT"
+
+# [수정] docker run 옵션 강화
+# --privileged: 타임스탬프 수정(touch) 및 하드웨어 접근 권한 허용
+# --security-opt seccomp=unconfined: Wine의 네트워크 소켓 호출 차단 해제
 docker run -it \
     --name electrum-wine-builder-cont \
+    --privileged \
+    --security-opt seccomp=unconfined \
     -v "$PROJECT_ROOT_OR_FRESHCLONE_ROOT":/opt/wine64/drive_c/electrum \
     --rm \
     --workdir /opt/wine64/drive_c/electrum/contrib/build-wine \

@@ -1,2 +1,3 @@
-# custom-electrum9
-app name change and android build workflows
+# custom-electrum10
+root,dns, <br>
+icon,explorer,sat fix
