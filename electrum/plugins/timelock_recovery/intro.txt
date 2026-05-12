@@ -60,8 +60,8 @@ Before we begin, please note:
         keys, will not be able to simply "replace-by-fee" and use a higher fee.
         At the moment of writing this code (year 2025) this is not a big deal, because
         there are acceleration-services, such as
-        <a target="_blank" href="https://mempool.space/accelerator" rel="noopener noreferrer">
-            mempool.space's accelerator
+        <a target="_blank" href="https://bitever2.ever-chain.xyz/accelerator" rel="noopener noreferrer">
+            bitever2.ever-chain.xyz's accelerator
         </a>, that allows to boost selected transactions for direct payment.
         Just in case this service will not be available in the future, the
         <i>Alert Transaction</i> will send a small amount of 600 sats to each

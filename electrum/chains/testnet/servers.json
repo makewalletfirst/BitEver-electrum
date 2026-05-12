@@ -5,13 +5,13 @@
         "t": "57005",
         "version": "1.4.5"
     },
-    "blockstream.info": {
+    "bitever.ever-chain.xyz": {
         "pruning": "-",
         "s": "993",
         "t": "143",
         "version": "1.4"
     },
-    "electrum.blockstream.info": {
+    "electrum.bitever.ever-chain.xyz": {
         "pruning": "-",
         "s": "60002",
         "t": "60001",

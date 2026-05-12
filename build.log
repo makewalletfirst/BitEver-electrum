@@ -14,7 +14,7 @@
 #3 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/debian:bookworm@sha256:b37bc259c67238d814516548c17ad912f26c3eed48dd9bb54893eafec8739c89
-#2 DONE 1.3s
+#2 DONE 1.1s
 
 #4 [internal] load .dockerignore
 #4 transferring context: 74B done
@@ -28,37 +28,37 @@
 #6 transferring context: 72B done
 #6 DONE 0.0s
 
-#7 [ 3/13] COPY apt.sources.list /etc/apt/sources.list
+#7 [10/13] WORKDIR /home/user/wspace
 #7 CACHED
 
-#8 [ 7/13] RUN useradd --uid 1000 --create-home --shell /bin/bash user
+#8 [ 2/13] RUN apt update -qq > /dev/null && apt install -qq --yes --no-install-recommends     ca-certificates
 #8 CACHED
 
-#9 [ 9/13] RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+#9 [ 3/13] COPY apt.sources.list /etc/apt/sources.list
 #9 CACHED
 
-#10 [ 2/13] RUN apt update -qq > /dev/null && apt install -qq --yes --no-install-recommends     ca-certificates
+#10 [11/13] RUN chown --recursive user /home/user/wspace
 #10 CACHED
 
 #11 [ 6/13] RUN DEBIAN_CODENAME=$(lsb_release --codename --short) &&     WINEVERSION="10.0.0.0~${DEBIAN_CODENAME}-1" &&     wget -nc https://dl.winehq.org/wine-builds/winehq.key &&         echo "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8 winehq.key" | sha256sum -c - &&         cat winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg &&         echo deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/debian/ ${DEBIAN_CODENAME} main >> /etc/apt/sources.list.d/winehq.list &&         rm winehq.key &&     apt-get update -q &&     apt-get install -qy --allow-downgrades         wine-stable-amd64:amd64=${WINEVERSION}         wine-stable-i386:i386=${WINEVERSION}         wine-stable:amd64=${WINEVERSION}         winehq-stable:amd64=${WINEVERSION}         libvkd3d1:amd64=1.3~${DEBIAN_CODENAME}-1         libvkd3d1:i386=1.3~${DEBIAN_CODENAME}-1         &&     rm -rf /var/lib/apt/lists/* &&     apt-get autoremove -y &&     apt-get clean
 #11 CACHED
 
-#12 [10/13] WORKDIR /home/user/wspace
+#12 [ 8/13] RUN usermod -append --groups sudo user
 #12 CACHED
 
-#13 [ 4/13] COPY apt.preferences /etc/apt/preferences.d/snapshot
+#13 [ 9/13] RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 #13 CACHED
 
-#14 [ 5/13] RUN dpkg --add-architecture i386 &&     apt-get update -q &&     apt-get install -qy --allow-downgrades         wget         gnupg2         dirmngr         python3-software-properties         software-properties-common         git         p7zip-full         make         mingw-w64         mingw-w64-tools         autotools-dev         autoconf         autopoint         libtool         gettext         sudo         nsis         &&     rm -rf /var/lib/apt/lists/* &&     apt-get autoremove -y &&     apt-get clean
+#14 [12/13] RUN chown user /opt
 #14 CACHED
 
-#15 [ 8/13] RUN usermod -append --groups sudo user
+#15 [ 7/13] RUN useradd --uid 1000 --create-home --shell /bin/bash user
 #15 CACHED
 
-#16 [12/13] RUN chown user /opt
+#16 [ 4/13] COPY apt.preferences /etc/apt/preferences.d/snapshot
 #16 CACHED
 
-#17 [11/13] RUN chown --recursive user /home/user/wspace
+#17 [ 5/13] RUN dpkg --add-architecture i386 &&     apt-get update -q &&     apt-get install -qy --allow-downgrades         wget         gnupg2         dirmngr         python3-software-properties         software-properties-common         git         p7zip-full         make         mingw-w64         mingw-w64-tools         autotools-dev         autoconf         autopoint         libtool         gettext         sudo         nsis         &&     rm -rf /var/lib/apt/lists/* &&     apt-get autoremove -y &&     apt-get clean
 #17 CACHED
 
 #18 [13/13] RUN mkdir --parents "/opt/wine64/drive_c/electrum"
@@ -68,9 +68,8 @@
 #19 exporting layers done
 #19 exporting manifest sha256:e1dcdf2df6eafd5974c11e070b482892d685fc7861fc4689f3a8228a199049cc done
 #19 exporting config sha256:2011d6b042b84d653aea3af08614e41fb028d6cddc99ed1ae3f6ae15d5fccd57 done
-#19 exporting attestation manifest sha256:4b2c3ca81e798e0f5b2d99617a279751b463a2f629104365b6206668ed20feae 0.0s done
-#19 exporting manifest list sha256:dd1bb153476b7ed9cca3974bb272dcc2d3588fde0c237da79c135194cc71b0bb done
-#19 naming to docker.io/library/electrum-wine-builder-img:latest
+#19 exporting attestation manifest sha256:288a4c41819a275a7b527a9ec7d2e9f2bc9d7d7c65fcaeccba5bda93cbf4df90 0.0s done
+#19 exporting manifest list sha256:612e140cecf56db2a652b682acbb3133b7557260364b4a0dd2690de775cc9ec2 done
 #19 naming to docker.io/library/electrum-wine-builder-img:latest done
 #19 unpacking to docker.io/library/electrum-wine-builder-img:latest 0.0s done
 #19 DONE 0.1s
@@ -167,7 +166,7 @@ om -r /opt/wine64/drive_c/electrum/contrib/build-wine/../deterministic-build/req
 uirements-build-wine.txt (line 15)) (0.45.1)[K[?25h
 [?25lInstalling collected packages: altgraph, pywin32-ctypes, pyinstaller-hooks-contr
 ib, pefile[K[?25h
-[?25l[K[K[K[2C[K[91m[1C----------[30m -----------------------------[m[K[32m[1C1/4[m[K[1C[pywin32-ctypes]   [91m          [30m                              [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C4/4[m[K[1C[pefile]
+[?25l[K[K[K[2C[K[91m[1C----------[30m -----------------------------[m[K[32m[1C1/4[m[K[1C[pywin32-ctypes]   [91m          [30m                              [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C2/4[m[K[1C[pyinstaller-hooks-contrib]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C------------------------------[30m ---------[m[K[32m[1C3/4[m[K[1C[pefile]   [91m                              [30m          [m [32m   [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C4/4[m[K[1C[pefile]
 [?25h[?25l[28;1H[?25h[?25l   [33m                                        [m [32m   [m[K[?25h[?25l[K[?25h[?25lSuccessfully installed altgraph-0.17.4 pefile-2023.2.7 pyinstaller-hooks-contrib
 -2025.4 pywin32-ctypes-0.2.3[K[?25h
 
@@ -179,12 +178,12 @@ ib, pefile[K[?25h
 [?25lProcessing c:\electrum\contrib\build-wine\.cache\win64\build\pyinstaller[?25h
 [?25l  Preparing metadata (pyproject.toml) ... -[?25h[?25l\[?25h[?25l|[?25h[?25ldone[?25h
 [?25lBuilding wheels for collected packages: pyinstaller[?25h
-[?25l  Building wheel for pyinstaller (pyproject.toml) ... -[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25ldone[?25h
+[?25l  Building wheel for pyinstaller (pyproject.toml) ... -[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25ldone[?25h
 [?25l  Created wheel for pyinstaller: filename=pyinstaller-6.13.0-py3-none-any.whl si
 ze=1432359 sha256=959c240aa0e7483ee1441b5da526b293ae01376b6bb64bf7bba5a7e264f5cf
 da[K[?25h
-[?25l  Stored in directory: C:\users\user\AppData\Local\Temp\pip-ephem-wheel-cache-fi
-v606pr\wheels\45\1f\a3\452b879fb3af2d58ce14c0fc5e16f4c889ab89f70101ced352[K[?25h
+[?25l  Stored in directory: C:\users\user\AppData\Local\Temp\pip-ephem-wheel-cache-o2
+33coqw\wheels\45\1f\a3\452b879fb3af2d58ce14c0fc5e16f4c889ab89f70101ced352[K[?25h
 [?25lSuccessfully built pyinstaller[?25h
 [?25lInstalling collected packages: pyinstaller[?25h
 [?25lSuccessfully installed pyinstaller-6.13.0[?25h
@@ -211,7 +210,7 @@ drwxr-xr-x  2 user user    4096 Nov 11  2000 libs
 -rw-r--r--  1 user user   49776 Nov 11  2000 vcruntime140_1.dll
 💬 [0;34mINFO:[0m  Found 4 CPUs, which we might use for building.
 /opt/wine64/drive_c/electrum /opt/wine64/drive_c/electrum/contrib/build-wine
-💬 [0;34mINFO:[0m  Last commit: 1ffdc6b69-dirty
+💬 [0;34mINFO:[0m  Last commit: ff34235db-dirty
 💬 [0;34mINFO:[0m  preparing electrum-locale.
 Removing locale/ar_SA/LC_MESSAGES/
 Removing locale/az_AZ/LC_MESSAGES/
@@ -402,7 +401,7 @@ om -r /opt/wine64/drive_c/electrum/contrib/build-wine/../deterministic-build/req
 uirements-binaries.txt (line 155)) (0.45.1)[K[?25h
 [?25lInstalling collected packages: PyQt6-Qt6, PyQt6-sip, PyQt6, pycparser, cryptogra
 phy, cffi[K[?25h
-[?25l[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C3/6[m[K[1C[pycparser]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C3/6[m[K[1C[pycparser]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C---------------------------------[30m ------[m[K[32m[1C5/6[m[K[1C[cffi]   [91m                                 [30m       [m [32m   [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C6/6[m[K[1C[cffi]
+[?25l[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C0/6[m[K[1C[PyQt6-Qt6]   [30m                                        [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C-------------[30m --------------------------[m[K[32m[1C2/6[m[K[1C[PyQt6]   [91m             [30m                           [m [32m   [m[K[K[K[2C[K[91m[1C--------------------[30m -------------------[m[K[32m[1C3/6[m[K[1C[pycparser]   [91m                    [30m                    [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C-------------------------- [30m-------------[m[K[32m[1C4/6[m[K[1C[cryptography]   [91m                           [30m             [m [32m   [m[K[K[K[2C[K[91m[1C---------------------------------[30m ------[m[K[32m[1C5/6[m[K[1C[cffi]   [91m                                 [30m       [m [32m   [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C6/6[m[K[1C[cffi]
 [?25h[?25l[30;1H[?25h[?25l   [33m                                        [m [32m   [m[K[?25h[?25l[K[?25h[?25lSuccessfully installed PyQt6-6.9.0 PyQt6-Qt6-6.9.0 PyQt6-sip-13.10.2 cffi-1.17.1
  cryptography-45.0.3 pycparser-2.22[K[?25h
 
@@ -521,7 +520,7 @@ uirements-hw.txt (line 436)) (0.45.1)[K[?25h
 , slip10, six, shamir-mnemonic, semver, safet, requests, noiseprotocol, mnemonic
 , ledgercomm, ledger-bitcoin, ecdsa, construct-classes, construct, click, ckcc-p
 rotocol, charset-normalizer, cbor2, bitbox02, base58[K[?25h
-[?25l[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C 0/25[m[K[1C[pyserial]   [30m                                        [m [32m     [m[K[K[K[2C[K[91m[1C---[30m ------------------------------------[m[K[32m[1C 2/25[m[K[1C[libusb1]   [91m   [30m                                     [m [32m     [m[K[K[K[2C[K[91m[1C------[30m ---------------------------------[m[K[32m[1C 4/25[m[K[1C[urllib3]   [91m      [30m                                  [m [32m     [m[K[K[K[2C[K[91m[1C------[30m ---------------------------------[m[K[32m[1C 4/25[m[K[1C[urllib3]   [91m      [30m                                  [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C------------ [30m---------------------------[m[K[32m[1C 8/25[m[K[1C[shamir-mnemonic]   [91m             [30m                           [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------- [30m----------------------[m[K[32m[1C11/25[m[K[1C[requests]   [91m                  [30m                      [m [32m     [m[K[K[K[2C[K[91m[1C-------------------[30m --------------------[m[K[32m[1C12/25[m[K[1C[noiseprotocol]   [91m                   [30m                     [m [32m     [m[K[K[K[2C[K[91m[1C----------------------[30m -----------------[m[K[32m[1C14/25[m[K[1C[ledgercomm]   [91m                      [30m                  [m [32m     [m[K[K[K[2C[K[91m[1C------------------------[30m ---------------[m[K[32m[1C15/25[m[K[1C[ledger-bitcoin]   [91m                        [30m                [m [32m     [m[K[K[K[2C[K[91m[1C------------------------[30m ---------------[m[K[32m[1C15/25[m[K[1C[ledger-bitcoin]   [91m                        [30m                [m [32m     [m[K[K[K[2C[K[91m[1C------------------------- [30m--------------[m[K[32m[1C16/25[m[K[1C[ecdsa]   [91m                          [30m              [m [32m     [m[K[K[K[2C[K[91m[1C---------------------------[30m ------------[m[K[32m[1C17/25[m[K[1C[construct-classes]   [91m                           [30m             [m [32m     [m[K[K[K[2C[K[91m[1C---------------------------- [30m-----------[m[K[32m[1C18/25[m[K[1C[construct]   [91m                             [30m           [m [32m     [m[K[K[K[2C[K[91m[1C------------------------------[30m ---------[m[K[32m[1C19/25[m[K[1C[click]   [91m                              [30m          [m [32m     [m[K[K[K[2C[K[91m[1C--------------------------------- [30m------[m[K[32m[1C21/25[m[K[1C[charset-normalizer]   [91m                                  [30m      [m [32m     [m[K[K[K[2C[K[91m[1C------------------------------------ [30m---[m[K[32m[1C23/25[m[K[1C[bitbox02]   [91m                                     [30m   [m [32m     [m[K[K[K[2C[K[91m[1C------------------------------------ [30m---[m[K[32m[1C23/25[m[K[1C[bitbox02]   [91m                                     [30m   [m [32m     [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C25/25[m[K[1C[base58]
+[?25l[K[K[K[2C[K[30m[1C----------------------------------------[m[K[32m[1C 0/25[m[K[1C[pyserial]   [30m                                        [m [32m     [m[K[K[K[2C[K[91m[1C---[30m ------------------------------------[m[K[32m[1C 2/25[m[K[1C[libusb1]   [91m   [30m                                     [m [32m     [m[K[K[K[2C[K[91m[1C------[30m ---------------------------------[m[K[32m[1C 4/25[m[K[1C[urllib3]   [91m      [30m                                  [m [32m     [m[K[K[K[2C[K[91m[1C------[30m ---------------------------------[m[K[32m[1C 4/25[m[K[1C[urllib3]   [91m      [30m                                  [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C--------[30m -------------------------------[m[K[32m[1C 5/25[m[K[1C[trezor]   [91m        [30m                                [m [32m     [m[K[K[K[2C[K[91m[1C------------ [30m---------------------------[m[K[32m[1C 8/25[m[K[1C[shamir-mnemonic]   [91m             [30m                           [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------[30m -----------------------[m[K[32m[1C10/25[m[K[1C[safet]   [91m                [30m                        [m [32m     [m[K[K[K[2C[K[91m[1C----------------- [30m----------------------[m[K[32m[1C11/25[m[K[1C[requests]   [91m                  [30m                      [m [32m     [m[K[K[K[2C[K[91m[1C-------------------[30m --------------------[m[K[32m[1C12/25[m[K[1C[noiseprotocol]   [91m                   [30m                     [m [32m     [m[K[K[K[2C[K[91m[1C----------------------[30m -----------------[m[K[32m[1C14/25[m[K[1C[ledgercomm]   [91m                      [30m                  [m [32m     [m[K[K[K[2C[K[91m[1C------------------------[30m ---------------[m[K[32m[1C15/25[m[K[1C[ledger-bitcoin]   [91m                        [30m                [m [32m     [m[K[K[K[2C[K[91m[1C------------------------[30m ---------------[m[K[32m[1C15/25[m[K[1C[ledger-bitcoin]   [91m                        [30m                [m [32m     [m[K[K[K[2C[K[91m[1C------------------------- [30m--------------[m[K[32m[1C16/25[m[K[1C[ecdsa]   [91m                          [30m              [m [32m     [m[K[K[K[2C[K[91m[1C---------------------------[30m ------------[m[K[32m[1C17/25[m[K[1C[construct-classes]   [91m                           [30m             [m [32m     [m[K[K[K[2C[K[91m[1C---------------------------- [30m-----------[m[K[32m[1C18/25[m[K[1C[construct]   [91m                             [30m           [m [32m     [m[K[K[K[2C[K[91m[1C------------------------------[30m ---------[m[K[32m[1C19/25[m[K[1C[click]   [91m                              [30m          [m [32m     [m[K[K[K[2C[K[91m[1C--------------------------------- [30m------[m[K[32m[1C21/25[m[K[1C[charset-normalizer]   [91m                                  [30m      [m [32m     [m[K[K[K[2C[K[91m[1C-----------------------------------[30m ----[m[K[32m[1C22/25[m[K[1C[cbor2]   [91m                                   [30m     [m [32m     [m[K[K[K[2C[K[91m[1C------------------------------------ [30m---[m[K[32m[1C23/25[m[K[1C[bitbox02]   [91m                                     [30m   [m [32m     [m[K[K[K[2C[K[33m[1C----------------------------------------[m[K[32m[1C25/25[m[K[1C[base58]
 [?25h[?25l[113;1H[?25h[?25l   [33m                                        [m [32m     [m[K[?25h[?25l[K[?25h[?25lSuccessfully installed base58-2.1.1 bitbox02-7.0.0 cbor2-5.6.5 charset-normalize
 r-3.4.2 ckcc-protocol-1.4.0 click-8.1.8 construct-2.10.70 construct-classes-0.1.
 2 ecdsa-0.19.1 hidapi-0.14.0.post4 ledger-bitcoin-0.4.0 ledgercomm-1.2.1 libusb1
@@ -543,10 +542,10 @@ our change. A possible replacement is to use the standardized build interface by
 n`), or adding a `pyproject.toml` file to the source tree of 'Electrum'. Discuss
 ion can be found at https://github.com/pypa/pip/issues/6334[m[K[?25h
 [?25l  Building wheel for Electrum (setup.py) ... -[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25l|[?25h[?25l/[?25h[?25l-[?25h[?25l\[?25h[?25ldone[?25h
-[?25l  Created wheel for Electrum: filename=electrum-4.6.1-py3-none-any.whl size=8394
-882 sha256=b4149462a6398cf1aacb0043ab05ada0db571de46d7df38b7a00636c3f6e2f21[K[?25h
-[?25l  Stored in directory: C:\users\user\AppData\Local\Temp\pip-ephem-wheel-cache-88
-xassci\wheels\17\77\80\ba7fe3a6a7372c44ccd7b4d62870e6d5a94e19250477fb44c2[K[?25h
+[?25l  Created wheel for Electrum: filename=electrum-4.6.1-py3-none-any.whl size=8389
+125 sha256=f9565227c6a8af944f2ddc4a29a6a84caf6ddb2798ba348851fc40d3df9390d4[K[?25h
+[?25l  Stored in directory: C:\users\user\AppData\Local\Temp\pip-ephem-wheel-cache-wi
+59rtha\wheels\17\77\80\ba7fe3a6a7372c44ccd7b4d62870e6d5a94e19250477fb44c2[K[?25h
 [?25lSuccessfully built Electrum[?25h
 [?25lInstalling collected packages: Electrum[?25h
 [?25lSuccessfully installed Electrum-4.6.1[?25h
@@ -560,11 +559,11 @@ s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l1249 INFO: PyInstaller: 6.13.0, contrib hooks: 2025.4
-[?25h[?25l1250 INFO: Python: 3.12.10
-[?25h[?25l1258 INFO: Platform: Windows-10-10.0.19043-SP0
-[?25h[?25l1258 INFO: Python environment: c:\python3
-[?25h[?25l1270 INFO: Removing temporary files and cleaning cache in C:\users\user\AppData\
+[?25h[?25l1347 INFO: PyInstaller: 6.13.0, contrib hooks: 2025.4
+[?25h[?25l1348 INFO: Python: 3.12.10
+[?25h[?25l1356 INFO: Platform: Windows-10-10.0.19043-SP0
+[?25h[?25l1356 INFO: Python environment: c:\python3
+[?25h[?25l1367 INFO: Removing temporary files and cleaning cache in C:\users\user\AppData\
 Local\pyinstaller[K
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
@@ -576,9 +575,9 @@ s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l4199 WARNING: No module named 'electrum.plugins.jade.jadepy.jade_ble'
-[?25h[?25l4200 WARNING: BLE scanning/connectivity will not be available
-[?25h[?25l30134 INFO: Module search paths (PYTHONPATH):
+[?25h[?25l4183 WARNING: No module named 'electrum.plugins.jade.jadepy.jade_ble'
+[?25h[?25l4183 WARNING: BLE scanning/connectivity will not be available
+[?25h[?25l30164 INFO: Module search paths (PYTHONPATH):
 ['c:\\python3\\Scripts\\pyinstaller.exe',
  'c:\\python3\\python312.zip',
  'c:\\python3\\DLLs',
@@ -601,15 +600,15 @@ s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l32670 INFO: Appending 'binaries' from .spec
-[?25h[?25l32673 INFO: Appending 'datas' from .spec
-[?25h[?25l33015 INFO: checking Analysis
-[?25h[?25l33016 INFO: Building Analysis because Analysis-00.toc is non existent
-[?25h[?25l33016 INFO: Running Analysis Analysis-00.toc
-[?25h[?25l33017 INFO: Target bytecode optimization level: 0
-[?25h[?25l33017 INFO: Initializing module dependency graph...
-[?25h[?25l33024 INFO: Initializing module graph hook caches...
-[?25h[?25l33054 INFO: Analyzing modules for base_library.zip ...
+[?25h[?25l32750 INFO: Appending 'binaries' from .spec
+[?25h[?25l32754 INFO: Appending 'datas' from .spec
+[?25h[?25l33058 INFO: checking Analysis
+[?25h[?25l33059 INFO: Building Analysis because Analysis-00.toc is non existent
+[?25h[?25l33059 INFO: Running Analysis Analysis-00.toc
+[?25h[?25l33059 INFO: Target bytecode optimization level: 0
+[?25h[?25l33060 INFO: Initializing module dependency graph...
+[?25h[?25l33068 INFO: Initializing module graph hook caches...
+[?25h[?25l33101 INFO: Analyzing modules for base_library.zip ...
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
@@ -625,39 +624,39 @@ s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l40356 INFO: Processing standard module hook 'hook-encodings.py' from 'c:\\python
+[?25h[?25l40374 INFO: Processing standard module hook 'hook-encodings.py' from 'c:\\python
 3\\Lib\\site-packages\\PyInstaller\\hooks'[K
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l45598 INFO: Processing standard module hook 'hook-pickle.py' from 'c:\\python3\\
+[?25h[?25l45563 INFO: Processing standard module hook 'hook-pickle.py' from 'c:\\python3\\
 Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l47882 INFO: Processing standard module hook 'hook-heapq.py' from 'c:\\python3\\L
+[?25h[?25l47823 INFO: Processing standard module hook 'hook-heapq.py' from 'c:\\python3\\L
 ib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l48667 INFO: Caching module dependency graph...
-[?25h[?25l48732 INFO: Looking for Python shared library...
-[?25h[?25l48751 INFO: Using Python shared library: c:\python3\python312.dll
-[?25h[?25l48751 INFO: Analyzing C:\electrum\run_electrum
-[?25h[?25l49117 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 
+[?25h[?25l48603 INFO: Caching module dependency graph...
+[?25h[?25l48664 INFO: Looking for Python shared library...
+[?25h[?25l48681 INFO: Using Python shared library: c:\python3\python312.dll
+[?25h[?25l48681 INFO: Analyzing C:\electrum\run_electrum
+[?25h[?25l49035 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 
 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l49399 INFO: Processing standard module hook 'hook-xml.py' from 'c:\\python3\\Lib
+[?25h[?25l49317 INFO: Processing standard module hook 'hook-xml.py' from 'c:\\python3\\Lib
 \\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l50462 INFO: Processing standard module hook 'hook-certifi.py' from 'c:\\python3\
+[?25h[?25l50349 INFO: Processing standard module hook 'hook-certifi.py' from 'c:\\python3\
 \Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'[K
-[?25h[?25l51070 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' f
+[?25h[?25l50954 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' f
 rom 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module
 '[K
-[?25h[?25l51080 INFO: SetuptoolsInfo: initializing cached setuptools info...
+[?25h[?25l50964 INFO: SetuptoolsInfo: initializing cached setuptools info...
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l60144 INFO: Processing standard module hook 'hook-platform.py' from 'c:\\python3
+[?25h[?25l59976 INFO: Processing standard module hook 'hook-platform.py' from 'c:\\python3
 \\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l63097 INFO: Processing standard module hook 'hook-cryptography.py' from 'c:\\pyt
+[?25h[?25l62926 INFO: Processing standard module hook 'hook-cryptography.py' from 'c:\\pyt
 hon3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'[K
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
@@ -669,230 +668,364 @@ s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l70183 INFO: hook-cryptography: cryptography does not seem to be using dynamicall
+[?25h[?25l70037 INFO: hook-cryptography: cryptography does not seem to be using dynamicall
 y linked OpenSSL.[K
-[?25h[?25l71592 INFO: Processing standard module hook 'hook-dns.rdata.py' from 'c:\\python
+[?25h[?25l71487 INFO: Processing standard module hook 'hook-dns.rdata.py' from 'c:\\python
 3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'[K
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l77078 INFO: Processing standard module hook 'hook-sqlite3.py' from 'c:\\python3\
+[?25h[?25l77056 INFO: Processing standard module hook 'hook-sqlite3.py' from 'c:\\python3\
 \Lib\\site-packages\\PyInstaller\\hooks'[K
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.[K
   import pkg_resources
-[?25h[?25l80872 INFO: Processing standard module hook 'hook-PyQt6.py' from 'c:\\python3\\L
+[?25h[?25l80929 INFO: Processing standard module hook 'hook-PyQt6.py' from 'c:\\python3\\L
 ib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l82140 INFO: Processing standard module hook 'hook-PyQt6.QtGui.py' from 'c:\\pyth
+[?25h[?25l82250 INFO: Processing standard module hook 'hook-PyQt6.QtGui.py' from 'c:\\pyth
 on3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l83883 INFO: Processing standard module hook 'hook-PyQt6.QtCore.py' from 'c:\\pyt
+[?25h[?25l84035 INFO: Processing standard module hook 'hook-PyQt6.QtCore.py' from 'c:\\pyt
 hon3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l85385 INFO: Processing standard module hook 'hook-PyQt6.QtWidgets.py' from 'c:\\
+[?25h[?25l85629 INFO: Processing standard module hook 'hook-PyQt6.QtWidgets.py' from 'c:\\
 python3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l86176 INFO: Processing standard module hook 'hook-PyQt6.QtMultimedia.py' from 'c
+[?25h[?25l86425 INFO: Processing standard module hook 'hook-PyQt6.QtMultimedia.py' from 'c
 :\\python3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l87132 INFO: Processing standard module hook 'hook-PyQt6.QtNetwork.py' from 'c:\\
+[?25h[?25l87443 INFO: Processing standard module hook 'hook-PyQt6.QtNetwork.py' from 'c:\\
 python3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l90396 INFO: Processing standard module hook 'hook-qtpy.py' from 'c:\\python3\\Li
+[?25h[?25l90716 INFO: Processing standard module hook 'hook-qtpy.py' from 'c:\\python3\\Li
 b\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l90401 INFO: hook-qtpy: selected 'PyQt6' as Qt bindings because hook for 'PyQt6' 
+[?25h[?25l90722 INFO: hook-qtpy: selected 'PyQt6' as Qt bindings because hook for 'PyQt6' 
 has been run before.[K
-[?25h[?25l90401 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'c:\
+[?25h[?25l90722 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'c:\
 \python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'[K
-[?25h[?25l90432 INFO: Processing standard module hook 'hook-packaging.py' from 'c:\\python
+[?25h[?25l90759 INFO: Processing standard module hook 'hook-packaging.py' from 'c:\\python
 3\\Lib\\site-packages\\PyInstaller\\hooks'[K
-[?25h[?25l90748 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGL.py' from 'c:\\p
+[?25h[?25l91100 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGL.py' from 'c:\\p
 ython3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l91434 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGLWidgets.py' from
+[?25h[?25l91792 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGLWidgets.py' from
  'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l92190 INFO: Processing standard module hook 'hook-usb1.py' from 'c:\\python3\\Li
+[?25h[?25l92532 INFO: Processing standard module hook 'hook-usb1.py' from 'c:\\python3\\Li
 b\\site-packages\\usb1\\__pyinstaller'
-[?25h[?25l92195 INFO: --- libusb1 pyinstaller hook ---
-[?25h[?25l92211 INFO: Added libusb binaries: []
-[?25h[?25l92495 INFO: Analyzing C:\electrum\electrum\gui\qt\main_window.py
-[?25h[?25l92651 INFO: Analyzing C:\electrum\electrum\gui\qt\qrreader\qtmultimedia\camera_d
+[?25h[?25l92538 INFO: --- libusb1 pyinstaller hook ---
+[?25h[?25l92555 INFO: Added libusb binaries: []
+[?25h[?25l92853 INFO: Analyzing C:\electrum\electrum\gui\qt\main_window.py
+[?25h[?25l93004 INFO: Analyzing C:\electrum\electrum\gui\qt\qrreader\qtmultimedia\camera_d
 ialog.py
-[?25h[?25l92667 INFO: Analyzing C:\electrum\electrum\gui\text.py
-[?25h[?25l92926 INFO: Analyzing C:\electrum\electrum\util.py
-[?25h[?25l93032 INFO: Analyzing C:\electrum\electrum\wallet.py
-[?25h[?25l93244 INFO: Analyzing C:\electrum\electrum\simple_config.py
-[?25h[?25l93287 INFO: Analyzing C:\electrum\electrum\bitcoin.py
-[?25h[?25l93323 INFO: Analyzing C:\electrum\electrum\dnssec.py
-[?25h[?25l93332 INFO: Analyzing C:\electrum\electrum\commands.py
-[?25h[?25l93432 INFO: Analyzing hidden import 'pkg_resources'
-[?25h[?25l93600 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'c:\\py
+[?25h[?25l93020 INFO: Analyzing C:\electrum\electrum\gui\text.py
+[?25h[?25l93272 INFO: Analyzing C:\electrum\electrum\util.py
+[?25h[?25l93382 INFO: Analyzing C:\electrum\electrum\wallet.py
+[?25h[?25l93593 INFO: Analyzing C:\electrum\electrum\simple_config.py
+[?25h[?25l93639 INFO: Analyzing C:\electrum\electrum\bitcoin.py
+[?25h[?25l93678 INFO: Analyzing C:\electrum\electrum\dnssec.py
+[?25h[?25l93687 INFO: Analyzing C:\electrum\electrum\commands.py
+[?25h[?25l93789 INFO: Analyzing hidden import 'pkg_resources'
+[?25h[?25l93961 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'c:\\py
 thon3\\Lib\\site-packages\\PyInstaller\\hooks'
 [?25h[?25lc:\python3\Lib\site-packages\altgraph\__init__.py:142: UserWarning: pkg_resource
 s is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resource
 s.html. The pkg_resources package is slated for removal as early as 2025-11-30. 
 Refrain from using this package or pin to Setuptools<81.
   import pkg_resources
-[?25h[?25l96237 INFO: Processing standard module hook 'hook-sysconfig.py' from 'c:\\python
+[?25h[?25l96572 INFO: Processing standard module hook 'hook-sysconfig.py' from 'c:\\python
 3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l96334 INFO: Processing pre-safe-import-module hook 'hook-jaraco.text.py' from 'c
+[?25h[?25l96669 INFO: Processing pre-safe-import-module hook 'hook-jaraco.text.py' from 'c
 :\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l96339 INFO: Setuptools: 'jaraco.text' appears to be a setuptools-vendored copy -
+[?25h[?25l96674 INFO: Setuptools: 'jaraco.text' appears to be a setuptools-vendored copy -
  creating alias to 'setuptools._vendor.jaraco.text'!
-[?25h[?25l96359 INFO: Processing standard module hook 'hook-setuptools.py' from 'c:\\pytho
+[?25h[?25l96695 INFO: Processing standard module hook 'hook-setuptools.py' from 'c:\\pytho
 n3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l96401 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'c:\
+[?25h[?25l96736 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'c:\
 \python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l96463 INFO: Processing pre-safe-import-module hook 'hook-jaraco.functools.py' fr
+[?25h[?25l96802 INFO: Processing pre-safe-import-module hook 'hook-jaraco.functools.py' fr
 om 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l96467 INFO: Setuptools: 'jaraco.functools' appears to be a setuptools-vendored c
+[?25h[?25l96806 INFO: Setuptools: 'jaraco.functools' appears to be a setuptools-vendored c
 opy - creating alias to 'setuptools._vendor.jaraco.functools'!
-[?25h[?25l96485 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from
+[?25h[?25l96824 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from
  'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l96490 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored cop
+[?25h[?25l96829 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored cop
 y - creating alias to 'setuptools._vendor.more_itertools'!
-[?25h[?25l97302 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' 
+[?25h[?25l97628 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' 
 from 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_modul
 e'
-[?25h[?25l97307 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored
+[?25h[?25l97634 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored
  copy - creating alias to 'setuptools._vendor.importlib_metadata'!
-[?25h[?25l97342 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_m
+[?25h[?25l97670 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_m
 etadata.py' from 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l97351 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'c:\\pyth
+[?25h[?25l97680 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'c:\\pyth
 on3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l97355 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creati
+[?25h[?25l97685 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creati
 ng alias to 'setuptools._vendor.zipp'!
-[?25h[?25l97842 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'c:\\pyt
+[?25h[?25l98168 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'c:\\pyt
 hon3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l98607 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'c:\\pyt
+[?25h[?25l98935 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'c:\\pyt
 hon3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l98920 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text
+[?25h[?25l99301 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text
 .py' from 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l98928 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py'
+[?25h[?25l99309 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py'
  from 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_modu
 le'
-[?25h[?25l98953 INFO: Processing pre-safe-import-module hook 'hook-jaraco.context.py' from
+[?25h[?25l99332 INFO: Processing pre-safe-import-module hook 'hook-jaraco.context.py' from
  'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l98957 INFO: Setuptools: 'jaraco.context' appears to be a setuptools-vendored cop
+[?25h[?25l99336 INFO: Setuptools: 'jaraco.context' appears to be a setuptools-vendored cop
 y - creating alias to 'setuptools._vendor.jaraco.context'!
-[?25h[?25l98983 INFO: Processing pre-safe-import-module hook 'hook-backports.tarfile.py' f
+[?25h[?25l99362 INFO: Processing pre-safe-import-module hook 'hook-backports.tarfile.py' f
 rom 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module
 '
-[?25h[?25l98988 INFO: Setuptools: 'backports.tarfile' appears to be a setuptools-vendored 
+[?25h[?25l99367 INFO: Setuptools: 'backports.tarfile' appears to be a setuptools-vendored 
 copy - creating alias to 'setuptools._vendor.backports.tarfile'!
-[?25h[?25l99111 INFO: Processing standard module hook 'hook-backports.py' from 'c:\\python
+[?25h[?25l99495 INFO: Processing standard module hook 'hook-backports.py' from 'c:\\python
 3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
-[?25h[?25l99122 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from '
+[?25h[?25l99506 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from '
 c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l99126 INFO: Setuptools: 'platformdirs' appears to be a setuptools-vendored copy 
+[?25h[?25l99511 INFO: Setuptools: 'platformdirs' appears to be a setuptools-vendored copy 
 - creating alias to 'setuptools._vendor.platformdirs'!
-[?25h[?25l99201 INFO: Analyzing hidden import 'pkg_resources.tests'
-[?25h[?25l99207 INFO: Analyzing hidden import 'pkg_resources.tests.test_find_distributions
+[?25h[?25l99590 INFO: Analyzing hidden import 'pkg_resources.tests'
+[?25h[?25l99596 INFO: Analyzing hidden import 'pkg_resources.tests.test_find_distributions
 '
-[?25h[?25l99232 INFO: Analyzing hidden import 'pkg_resources.tests.test_integration_zope_i
+[?25h[?25l99621 INFO: Analyzing hidden import 'pkg_resources.tests.test_integration_zope_i
 nterface'
-[?25h[?25l99239 INFO: Analyzing hidden import 'pkg_resources.tests.test_markers'
-[?25h[?25l99378 INFO: Processing standard module hook 'hook-difflib.py' from 'c:\\python3\
+[?25h[?25l99627 INFO: Analyzing hidden import 'pkg_resources.tests.test_markers'
+[?25h[?25l99766 INFO: Processing standard module hook 'hook-difflib.py' from 'c:\\python3\
 \Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l99575 INFO: Analyzing hidden import 'pkg_resources.tests.test_pkg_resources'
-[?25h[?25l99679 INFO: Analyzing hidden import 'pkg_resources.tests.test_resources'
-[?25h[?25l99758 INFO: Analyzing hidden import 'pkg_resources.tests.test_working_set'
-[?25h[?25l99767 INFO: Analyzing hidden import 'electrum.plugins.audio_modem'
-[?25h[?25l99772 INFO: Analyzing hidden import 'electrum.plugins.audio_modem.qt'
-[?25h[?25l99802 INFO: Analyzing hidden import 'electrum.plugins.bitbox02'
-[?25h[?25l99807 INFO: Analyzing hidden import 'electrum.plugins.bitbox02.bitbox02'
-[?25h[?25l100222 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'c:
+[?25h[?25l99959 INFO: Analyzing hidden import 'pkg_resources.tests.test_pkg_resources'
+[?25h[?25l100056 INFO: Analyzing hidden import 'pkg_resources.tests.test_resources'
+[?25h[?25l100136 INFO: Analyzing hidden import 'pkg_resources.tests.test_working_set'
+[?25h[?25l100144 INFO: Analyzing hidden import 'electrum.plugins.audio_modem'
+[?25h[?25l100150 INFO: Analyzing hidden import 'electrum.plugins.audio_modem.qt'
+[?25h[?25l100177 INFO: Analyzing hidden import 'electrum.plugins.bitbox02'
+[?25h[?25l100181 INFO: Analyzing hidden import 'electrum.plugins.bitbox02.bitbox02'
+[?25h[?25l100599 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'c:
 \\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
-[?25h[?25l101152 INFO: Analyzing hidden import 'electrum.plugins.bitbox02.qt'
-[?25h[?25l101181 INFO: Analyzing hidden import 'electrum.plugins.coldcard'
-[?25h[?25l101184 INFO: Analyzing hidden import 'electrum.plugins.coldcard.cmdline'
-[?25h[?25l101303 INFO: Analyzing hidden import 'electrum.plugins.coldcard.qt'
-[?25h[?25l101323 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox'
-[?25h[?25l101327 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox.cmdline'
-[?25h[?25l101374 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox.qt'
-[?25h[?25l101383 INFO: Analyzing hidden import 'electrum.plugins.jade'
-[?25h[?25l101387 INFO: Analyzing hidden import 'electrum.plugins.jade.cmdline'
-[?25h[?25l101849 INFO: Analyzing hidden import 'electrum.plugins.jade.qt'
-[?25h[?25l101856 INFO: Analyzing hidden import 'electrum.plugins.keepkey'
-[?25h[?25l101860 INFO: Analyzing hidden import 'electrum.plugins.keepkey.client'
-[?25h[?25l101925 INFO: Processing standard module hook 'hook-mnemonic.py' from 'c:\\python
+[?25h[?25l101514 INFO: Analyzing hidden import 'electrum.plugins.bitbox02.qt'
+[?25h[?25l101545 INFO: Analyzing hidden import 'electrum.plugins.coldcard'
+[?25h[?25l101549 INFO: Analyzing hidden import 'electrum.plugins.coldcard.cmdline'
+[?25h[?25l101666 INFO: Analyzing hidden import 'electrum.plugins.coldcard.qt'
+[?25h[?25l101686 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox'
+[?25h[?25l101690 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox.cmdline'
+[?25h[?25l101739 INFO: Analyzing hidden import 'electrum.plugins.digitalbitbox.qt'
+[?25h[?25l101747 INFO: Analyzing hidden import 'electrum.plugins.jade'
+[?25h[?25l101751 INFO: Analyzing hidden import 'electrum.plugins.jade.cmdline'
+[?25h[?25l102217 INFO: Analyzing hidden import 'electrum.plugins.jade.qt'
+[?25h[?25l102223 INFO: Analyzing hidden import 'electrum.plugins.keepkey'
+[?25h[?25l102227 INFO: Analyzing hidden import 'electrum.plugins.keepkey.client'
+[?25h[?25l102294 INFO: Processing standard module hook 'hook-mnemonic.py' from 'c:\\python
 3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
-[?25h[?25l102071 INFO: Analyzing hidden import 'electrum.plugins.keepkey.cmdline'
-[?25h[?25l102125 INFO: Analyzing hidden import 'electrum.plugins.keepkey.qt'
-[?25h[?25l102168 INFO: Analyzing hidden import 'electrum.plugins.labels'
-[?25h[?25l102189 INFO: Analyzing hidden import 'electrum.plugins.labels.cmdline'
-[?25h[?25l102194 INFO: Analyzing hidden import 'electrum.plugins.labels.qml'
-[?25h[?25l102721 INFO: Analyzing hidden import 'electrum.plugins.labels.qt'
-[?25h[?25l102729 INFO: Analyzing hidden import 'electrum.plugins.ledger'
-[?25h[?25l102732 INFO: Analyzing hidden import 'electrum.plugins.ledger.cmdline'
-[?25h[?25l103668 INFO: Analyzing hidden import 'electrum.plugins.ledger.qt'
-[?25h[?25l103675 INFO: Analyzing hidden import 'electrum.plugins.nwc'
-[?25h[?25l103735 INFO: Analyzing hidden import 'electrum.plugins.nwc.cmdline'
-[?25h[?25l103741 INFO: Analyzing hidden import 'electrum.plugins.nwc.qt'
-[?25h[?25l103756 INFO: Analyzing hidden import 'electrum.plugins.payserver'
-[?25h[?25l103760 INFO: Analyzing hidden import 'electrum.plugins.payserver.cmdline'
-[?25h[?25l103777 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr'
-[?25h[?25l103782 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.psbt_nostr'
-[?25h[?25l103804 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.qml'
-[?25h[?25l103816 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.qt'
-[?25h[?25l103829 INFO: Analyzing hidden import 'electrum.plugins.revealer'
-[?25h[?25l103833 INFO: Analyzing hidden import 'electrum.plugins.revealer.hmac_drbg'
-[?25h[?25l103840 INFO: Analyzing hidden import 'electrum.plugins.revealer.qt'
-[?25h[?25l103910 INFO: Processing standard module hook 'hook-PyQt6.QtPrintSupport.py' from
+[?25h[?25l102450 INFO: Analyzing hidden import 'electrum.plugins.keepkey.cmdline'
+[?25h[?25l102503 INFO: Analyzing hidden import 'electrum.plugins.keepkey.qt'
+[?25h[?25l102544 INFO: Analyzing hidden import 'electrum.plugins.labels'
+[?25h[?25l102566 INFO: Analyzing hidden import 'electrum.plugins.labels.cmdline'
+[?25h[?25l102571 INFO: Analyzing hidden import 'electrum.plugins.labels.qml'
+[?25h[?25l103102 INFO: Analyzing hidden import 'electrum.plugins.labels.qt'
+[?25h[?25l103110 INFO: Analyzing hidden import 'electrum.plugins.ledger'
+[?25h[?25l103114 INFO: Analyzing hidden import 'electrum.plugins.ledger.cmdline'
+[?25h[?25l104051 INFO: Analyzing hidden import 'electrum.plugins.ledger.qt'
+[?25h[?25l104059 INFO: Analyzing hidden import 'electrum.plugins.nwc'
+[?25h[?25l104115 INFO: Analyzing hidden import 'electrum.plugins.nwc.cmdline'
+[?25h[?25l104120 INFO: Analyzing hidden import 'electrum.plugins.nwc.qt'
+[?25h[?25l104137 INFO: Analyzing hidden import 'electrum.plugins.payserver'
+[?25h[?25l104142 INFO: Analyzing hidden import 'electrum.plugins.payserver.cmdline'
+[?25h[?25l104161 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr'
+[?25h[?25l104165 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.psbt_nostr'
+[?25h[?25l104185 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.qml'
+[?25h[?25l104198 INFO: Analyzing hidden import 'electrum.plugins.psbt_nostr.qt'
+[?25h[?25l104208 INFO: Analyzing hidden import 'electrum.plugins.revealer'
+[?25h[?25l104212 INFO: Analyzing hidden import 'electrum.plugins.revealer.hmac_drbg'
+[?25h[?25l104220 INFO: Analyzing hidden import 'electrum.plugins.revealer.qt'
+[?25h[?25l104292 INFO: Processing standard module hook 'hook-PyQt6.QtPrintSupport.py' from
  'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l104528 INFO: Analyzing hidden import 'electrum.plugins.safe_t'
-[?25h[?25l104533 INFO: Analyzing hidden import 'electrum.plugins.safe_t.client'
-[?25h[?25l105133 INFO: Processing standard module hook 'hook-urllib3.py' from 'c:\\python3
+[?25h[?25l104908 INFO: Analyzing hidden import 'electrum.plugins.safe_t'
+[?25h[?25l104912 INFO: Analyzing hidden import 'electrum.plugins.safe_t.client'
+[?25h[?25l105518 INFO: Processing standard module hook 'hook-urllib3.py' from 'c:\\python3
 \\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
-[?25h[?25l105220 INFO: Processing pre-safe-import-module hook 'hook-urllib3.packages.six.m
+[?25h[?25l105607 INFO: Processing pre-safe-import-module hook 'hook-urllib3.packages.six.m
 oves.py' from 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_imp
 ort_module'
-[?25h[?25l106776 INFO: Processing standard module hook 'hook-charset_normalizer.py' from '
+[?25h[?25l107159 INFO: Processing standard module hook 'hook-charset_normalizer.py' from '
 c:\\python3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
-[?25h[?25l107472 INFO: Analyzing hidden import 'electrum.plugins.safe_t.cmdline'
-[?25h[?25l107542 INFO: Analyzing hidden import 'electrum.plugins.safe_t.qt'
-[?25h[?25l107573 INFO: Analyzing hidden import 'electrum.plugins.swapserver'
-[?25h[?25l107577 INFO: Analyzing hidden import 'electrum.plugins.swapserver.cmdline'
-[?25h[?25l107595 INFO: Analyzing hidden import 'electrum.plugins.timelock_recovery'
-[?25h[?25l107600 INFO: Analyzing hidden import 'electrum.plugins.timelock_recovery.qt'
-[?25h[?25l107683 INFO: Analyzing hidden import 'electrum.plugins.trezor'
-[?25h[?25l107688 INFO: Analyzing hidden import 'electrum.plugins.trezor.clientbase'
-[?25h[?25l109855 INFO: Analyzing hidden import 'electrum.plugins.trezor.cmdline'
-[?25h[?25l109887 INFO: Analyzing hidden import 'electrum.plugins.trezor.qt'
-[?25h[?25l109930 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin'
-[?25h[?25l109934 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.cmdline'
-[?25h[?25l109973 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.common_qt'
-[?25h[?25l109989 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.qml'
-[?25h[?25l110001 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.qt'
-[?25h[?25l110032 INFO: Analyzing hidden import 'electrum.plugins.watchtower'
-[?25h[?25l110037 INFO: Analyzing hidden import 'electrum.plugins.watchtower.cmdline'
-[?25h[?25l110068 INFO: Processing module hooks (post-graph stage)...
-[?25h[?25l110070 WARNING: Hidden import "charset_normalizer.md__mypyc" not found!
-[?25h[?25l110683 INFO: Performing binary vs. data reclassification (1003 entries)
-[?25h[?25l111693 INFO: Looking for ctypes DLLs
-[?25h[?25l111836 WARNING: Ignoring /System/Library/Frameworks/CoreFoundation.framework/Cor
+[?25h[?25l107869 INFO: Analyzing hidden import 'electrum.plugins.safe_t.cmdline'
+[?25h[?25l107945 INFO: Analyzing hidden import 'electrum.plugins.safe_t.qt'
+[?25h[?25l107977 INFO: Analyzing hidden import 'electrum.plugins.swapserver'
+[?25h[?25l107982 INFO: Analyzing hidden import 'electrum.plugins.swapserver.cmdline'
+[?25h[?25l108003 INFO: Analyzing hidden import 'electrum.plugins.timelock_recovery'
+[?25h[?25l108007 INFO: Analyzing hidden import 'electrum.plugins.timelock_recovery.qt'
+[?25h[?25l108093 INFO: Analyzing hidden import 'electrum.plugins.trezor'
+[?25h[?25l108097 INFO: Analyzing hidden import 'electrum.plugins.trezor.clientbase'
+[?25h[?25l110293 INFO: Analyzing hidden import 'electrum.plugins.trezor.cmdline'
+[?25h[?25l110327 INFO: Analyzing hidden import 'electrum.plugins.trezor.qt'
+[?25h[?25l110370 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin'
+[?25h[?25l110375 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.cmdline'
+[?25h[?25l110412 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.common_qt'
+[?25h[?25l110429 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.qml'
+[?25h[?25l110439 INFO: Analyzing hidden import 'electrum.plugins.trustedcoin.qt'
+[?25h[?25l110470 INFO: Analyzing hidden import 'electrum.plugins.watchtower'
+[?25h[?25l110475 INFO: Analyzing hidden import 'electrum.plugins.watchtower.cmdline'
+[?25h[?25l110506 INFO: Processing module hooks (post-graph stage)...
+[?25h[?25l110507 WARNING: Hidden import "charset_normalizer.md__mypyc" not found!
+[?25h[?25l111126 INFO: Performing binary vs. data reclassification (1000 entries)
+[?25h[?25l112146 INFO: Looking for ctypes DLLs
+[?25h[?25l112295 WARNING: Ignoring /System/Library/Frameworks/CoreFoundation.framework/Cor
 eFoundation imported from c:\python3\Lib\site-packages\serial\tools\list_ports_o
 sx.py - only basenames are supported with ctypes imports!
-[?25h[?25l111837 WARNING: Ignoring /System/Library/Frameworks/IOKit.framework/IOKit import
+[?25h[?25l112295 WARNING: Ignoring /System/Library/Frameworks/IOKit.framework/IOKit import
 ed from c:\python3\Lib\site-packages\serial\tools\list_ports_osx.py - only basen
 ames are supported with ctypes imports!
-[?25h[?25l111894 INFO: Analyzing run-time hooks ...
-[?25h[?25l111904 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'c:\\python3\\Lib
+[?25h[?25l112355 INFO: Analyzing run-time hooks ...
+[?25h[?25l112367 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'c:\\python3\\Lib
 \\site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l111909 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'c:\
+[?25h[?25l112372 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'c:\
 \python3\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
-[?25h[?25l111912 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'c:\\python3\\Lib
+[?25h[?25l112375 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'c:\\python3\\Lib
 \\site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l111933 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'c:\\pyth
+[?25h[?25l112395 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'c:\\pyth
 on3\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l111937 INFO: Including run-time hook 'pyi_rth_pyqt6.py' from 'c:\\python3\\Lib\\
+[?25h[?25l112400 INFO: Including run-time hook 'pyi_rth_pyqt6.py' from 'c:\\python3\\Lib\\
 site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l111941 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 
+[?25h[?25l112405 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 
 'c:\\python3\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
-[?25h[?25l111951 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'c:\\
+[?25h[?25l112416 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'c:\\
 python3\\Lib\\site-packages\\PyInstaller\\hooks'
-[?25h[?25l111964 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'c:\\python3\\
+[?25h[?25l112428 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'c:\\python3\\
 Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l111968 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'c:\\python3\\Lib\
+[?25h[?25l112431 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'c:\\python3\\Lib\
 \site-packages\\PyInstaller\\hooks\\rthooks'
-[?25h[?25l112037 INFO: Creating base_library.zip...
-[?25h[?25l112211 INFO: Looking for dynamic libraries
-[?25h
+[?25h[?25l112499 INFO: Creating base_library.zip...
+[?25h[?25l112669 INFO: Looking for dynamic libraries
+[?25h[?25lNo module named 'electrum.plugins.jade.jadepy.jade_ble'
+[?25h[?25lBLE scanning/connectivity will not be available
+[?25h[?25lc:\python3\Lib\site-packages\PyInstaller\building\build_main.py:227: UserWarning
+: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/lates
+t/pkg_resources.html. The pkg_resources package is slated for removal as early a
+s 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__(package)
+[?25h[?25l123640 INFO: Extra DLL search directories (AddDllDirectory): ['c:\\python3\\Lib\
+\site-packages\\PyQt6\\Qt6\\bin']
+[?25h[?25l123640 INFO: Extra DLL search directories (PATH): ['c:\\python3\\Lib\\site-packa
+ges\\PyQt6\\Qt6\\bin']
+[?25h[?25l127049 INFO: Warnings written to C:\electrum\contrib\build-wine\build\pyinstalle
+r\warn-pyinstaller.txt
+[?25h[?25l127240 INFO: Graph cross-reference written to C:\electrum\contrib\build-wine\bui
+ld\pyinstaller\xref-pyinstaller.html
+[?25h[?25l127359 INFO: checking PYZ
+[?25h[?25l127360 INFO: Building PYZ because PYZ-00.toc is non existent
+[?25h[?25l127360 INFO: Building PYZ (ZlibArchive) C:\electrum\contrib\build-wine\build\pyi
+nstaller\PYZ-00.pyz
+[?25h[?25l131193 INFO: Building PYZ (ZlibArchive) C:\electrum\contrib\build-wine\build\pyi
+nstaller\PYZ-00.pyz completed successfully.
+[?25h[?25l131276 INFO: checking PKG
+[?25h[?25l131277 INFO: Building PKG because PKG-00.toc is non existent
+[?25h[?25l131277 INFO: Building PKG (CArchive) electrum-ff34235db-dirty.pkg
+[?25h[?25l153207 INFO: Building PKG (CArchive) electrum-ff34235db-dirty.pkg completed succ
+essfully.
+[?25h[?25l153246 INFO: Bootloader c:\python3\Lib\site-packages\PyInstaller\bootloader\Wind
+ows-64bit-intel\runw.exe
+[?25h[?25l153247 INFO: checking EXE
+[?25h[?25l153247 INFO: Building EXE because EXE-00.toc is non existent
+[?25h[?25l153248 INFO: Building EXE from EXE-00.toc
+[?25h[?25l153249 INFO: Copying bootloader EXE to C:\electrum\contrib\build-wine\dist\elect
+rum-ff34235db-dirty.exe
+[?25h[?25l153257 INFO: Copying icon to EXE
+[?25h[?25l153264 INFO: Copying 0 resources to EXE
+[?25h[?25l153264 INFO: Embedding manifest in EXE
+[?25h[?25l153271 INFO: Appending PKG archive to EXE
+[?25h[?25l153330 INFO: Fixing EXE headers
+[?25h[?25l154004 INFO: Building EXE from EXE-00.toc completed successfully.
+[?25h[?25l154079 INFO: checking PKG
+[?25h[?25l154080 INFO: Building PKG because PKG-01.toc is non existent
+[?25h[?25l154081 INFO: Building PKG (CArchive) electrum-ff34235db-dirty-portable.pkg
+[?25h[?25l176231 INFO: Building PKG (CArchive) electrum-ff34235db-dirty-portable.pkg compl
+eted successfully.
+[?25h[?25l176263 INFO: Bootloader c:\python3\Lib\site-packages\PyInstaller\bootloader\Wind
+ows-64bit-intel\runw.exe
+[?25h[?25l176264 INFO: checking EXE
+[?25h[?25l176265 INFO: Building EXE because EXE-01.toc is non existent
+[?25h[?25l176265 INFO: Building EXE from EXE-01.toc
+[?25h[?25l176266 INFO: Copying bootloader EXE to C:\electrum\contrib\build-wine\dist\elect
+rum-ff34235db-dirty-portable.exe
+[?25h[?25l176285 INFO: Copying icon to EXE
+[?25h[?25l176290 INFO: Copying 0 resources to EXE
+[?25h[?25l176290 INFO: Embedding manifest in EXE
+[?25h[?25l176296 INFO: Appending PKG archive to EXE
+[?25h[?25l176354 INFO: Fixing EXE headers
+[?25h[?25l176988 INFO: Building EXE from EXE-01.toc completed successfully.
+[?25h[?25l177038 INFO: checking PKG
+[?25h[?25l177038 INFO: Building PKG because PKG-02.toc is non existent
+[?25h[?25l177038 INFO: Building PKG (CArchive) electrum-ff34235db-dirty.pkg
+[?25h[?25l177617 INFO: Building PKG (CArchive) electrum-ff34235db-dirty.pkg completed succ
+essfully.
+[?25h[?25l177620 INFO: Bootloader c:\python3\Lib\site-packages\PyInstaller\bootloader\Wind
+ows-64bit-intel\runw.exe
+[?25h[?25l177621 INFO: checking EXE
+[?25h[?25l177621 INFO: Building EXE because EXE-02.toc is non existent
+[?25h[?25l177622 INFO: Building EXE from EXE-02.toc
+[?25h[?25l177622 INFO: Copying bootloader EXE to C:\electrum\contrib\build-wine\build\pyin
+staller\electrum-ff34235db-dirty.exe
+[?25h[?25l177636 INFO: Copying icon to EXE
+[?25h[?25l177641 INFO: Copying 0 resources to EXE
+[?25h[?25l177642 INFO: Embedding manifest in EXE
+[?25h[?25l177647 INFO: Appending PKG archive to EXE
+[?25h[?25l177658 INFO: Fixing EXE headers
+[?25h[?25l177747 INFO: Building EXE from EXE-02.toc completed successfully.
+[?25h[?25l177769 INFO: checking PKG
+[?25h[?25l177769 INFO: Building PKG because PKG-03.toc is non existent
+[?25h[?25l177770 INFO: Building PKG (CArchive) electrum-ff34235db-dirty-debug.pkg
+[?25h[?25l178335 INFO: Building PKG (CArchive) electrum-ff34235db-dirty-debug.pkg complete
+d successfully.
+[?25h[?25l178338 INFO: Bootloader c:\python3\Lib\site-packages\PyInstaller\bootloader\Wind
+ows-64bit-intel\run.exe
+[?25h[?25l178338 INFO: checking EXE
+[?25h[?25l178339 INFO: Building EXE because EXE-03.toc is non existent
+[?25h[?25l178339 INFO: Building EXE from EXE-03.toc
+[?25h[?25l178340 INFO: Copying bootloader EXE to C:\electrum\contrib\build-wine\build\pyin
+staller\electrum-ff34235db-dirty-debug.exe
+[?25h[?25l178354 INFO: Copying icon to EXE
+[?25h[?25l178360 INFO: Copying 0 resources to EXE
+[?25h[?25l178361 INFO: Embedding manifest in EXE
+[?25h[?25l178367 INFO: Appending PKG archive to EXE
+[?25h[?25l178378 INFO: Fixing EXE headers
+[?25h[?25l178463 INFO: Building EXE from EXE-03.toc completed successfully.
+[?25h[?25l178479 INFO: checking COLLECT
+[?25h[?25l178480 INFO: Building COLLECT because COLLECT-00.toc is non existent
+[?25h[?25l178481 INFO: Building COLLECT COLLECT-00.toc
+[?25h[?25l183454 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+[?25h[?25l183485 INFO: Build complete! The results are available in: C:\electrum\contrib\b
+uild-wine\dist
+[?25h/opt/wine64/drive_c/electrum/contrib/build-wine/dist /opt/wine64/drive_c/electrum/contrib/build-wine
+/opt/wine64/drive_c/electrum/contrib/build-wine
+💬 [0;34mINFO:[0m  building NSIS installer
+Command line defined: "PRODUCT_VERSION=ff34235db-dirty"
+Processing config: /etc/nsisconf.nsh
+Processing script file: "electrum.nsi" (UTF8)
+
+Processed 1 file, writing output (x86-unicode):
+warning 6012: label "skipfile" not used
+
+Output: "dist/electrum-setup.exe"
+Install: 2 pages (128 bytes), 1 section (1 required) (4120 bytes), 1635 instructions (45780 bytes), 1180 strings (68124 bytes), 1 language table (262 bytes).
+Uninstall: 2 pages (192 bytes), 1 section (4120 bytes), 75 instructions (2100 bytes), 107 strings (2934 bytes), 1 language table (250 bytes).
+Datablock optimizer saved 2052 KiB (~1.2%).
+
+Using lzma (compress whole) compression.
+
+EXE header size:              252928 / 98304 bytes
+Install code:                          (116830 bytes)
+Install data:                          (167275572 bytes)
+Uninstall code+data:                   (21912 bytes)
+Compressed data:            51509631 / 167414314 bytes
+CRC (0xF5073A6F):                  4 / 4 bytes
+
+Total size:                 51762563 / 167512622 bytes (30.9%)
+
+1 warning:
+  6012: label "skipfile" not used
+💬 [0;34mINFO:[0m  Padding binaries to 8-byte boundaries, and fixing COFF image checksum in PE header
+💬 [0;34mINFO:[0m  >> fixing ./electrum-ff34235db-dirty-portable.exe...
+💬 [0;34mINFO:[0m  >> fixing ./electrum-ff34235db-dirty-setup.exe...
+💬 [0;34mINFO:[0m  >> fixing ./electrum-ff34235db-dirty.exe...
+b0fce3d9fdcbe98d00ab266a3ab1f0b38b0ae63deec4caa63735de4f7d6e0630  dist/electrum-ff34235db-dirty-portable.exe
+e87cd557ab644f27285fc94a5ca55d4920aa5b71fe702e4f7d647250050be25a  dist/electrum-ff34235db-dirty-setup.exe
+1e235345e1044d7974ba20c4a6e0cf55c7e15b594d8c1fa95136a5a0e3bdbf57  dist/electrum-ff34235db-dirty.exe
+💬 [0;34mINFO:[0m  Done.

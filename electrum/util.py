@@ -96,17 +96,18 @@ base_units = {
     'sat': 0,
     'BEC': 8,    # ← 새 표기
     'mBEC': 5,   # ← 새 표기
+    'ever': 0,
 }
 
 # 2) 역매핑은 표시용이므로 BEC 쪽으로 “강제”합니다.
-base_units_inverse = {8: 'BEC', 5: 'mBEC', 2: 'bits', 0: 'sat'}
+base_units_inverse = {8: 'BEC', 5: 'mBEC', 2: 'bits', 0: 'ever'}
 
 # 3) UI 드롭다운에 노출할 순서는 BEC 쪽만 보여주면 됩니다.
-base_units_list = ['BEC', 'mBEC', 'bits', 'sat']
+base_units_list = ['BEC', 'mBEC', 'bits', 'ever']
 
 # (선택) 기본 단위가 mBEC(=소수점 5자리)라면 그대로 두시고,
 #        BEC를 기본으로 보이고 싶으면 아래를 8로 바꾸세요.
-DECIMAL_POINT_DEFAULT = 5  # mBEC
+DECIMAL_POINT_DEFAULT = 8  # mBEC
 
 
 
@@ -890,8 +891,8 @@ def format_satoshis(
 
 FEERATE_PRECISION = 1  # num fractional decimal places for sat/byte fee rates
 _feerate_quanta = Decimal(10) ** (-FEERATE_PRECISION)
-UI_UNIT_NAME_FEERATE_SAT_PER_VBYTE = "sat/vbyte"
-UI_UNIT_NAME_FEERATE_SAT_PER_VB = "sat/vB"
+UI_UNIT_NAME_FEERATE_SAT_PER_VBYTE = "ever/vbyte"
+UI_UNIT_NAME_FEERATE_SAT_PER_VB = "ever/vB"
 UI_UNIT_NAME_TXSIZE_VBYTES = "vbytes"
 UI_UNIT_NAME_MEMPOOL_MB = "vMB"
 
@@ -978,7 +979,7 @@ mainnet_block_explorers = {
                         {'tx': 'Transaction/', 'addr': 'Address/'}),
     'Blockchain.info': ('https://blockchain.com/btc/',
                         {'tx': 'tx/', 'addr': 'address/'}),
-    'Blockstream.info': ('https://blockstream.info/',
+    'Blockstream.info': ('https://bitever.ever-chain.xyz/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'Bitaps.com': ('https://btc.bitaps.com/',
                         {'tx': '', 'addr': ''}),
@@ -994,7 +995,7 @@ mainnet_block_explorers = {
                         {'tx': 'transaction/', 'addr': 'address/'}),
     'blockonomics.co': ('https://www.blockonomics.co/',
                         {'tx': 'api/tx?txid=', 'addr': '#/search?q='}),
-    'mempool.space': ('https://mempool.space/',
+    'bitever2.ever-chain.xyz': ('https://bitever2.ever-chain.xyz/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'mempool.emzy.de': ('https://mempool.emzy.de/',
                         {'tx': 'tx/', 'addr': 'address/'}),
@@ -1013,9 +1014,9 @@ testnet_block_explorers = {
                        {'tx': 'tx/', 'addr': 'address/'}),
     'Blockchain.info': ('https://www.blockchain.com/btc-testnet/',
                        {'tx': 'tx/', 'addr': 'address/'}),
-    'Blockstream.info': ('https://blockstream.info/testnet/',
+    'Blockstream.info': ('https://bitever.ever-chain.xyz/testnet/',
                         {'tx': 'tx/', 'addr': 'address/'}),
-    'mempool.space': ('https://mempool.space/testnet/',
+    'bitever2.ever-chain.xyz': ('https://bitever2.ever-chain.xyz/testnet/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'smartbit.com.au': ('https://testnet.smartbit.com.au/',
                        {'tx': 'tx/', 'addr': 'address/'}),
@@ -1024,7 +1025,7 @@ testnet_block_explorers = {
 }
 
 testnet4_block_explorers = {
-    'mempool.space': ('https://mempool.space/testnet4/',
+    'bitever2.ever-chain.xyz': ('https://bitever2.ever-chain.xyz/testnet4/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'wakiyamap.dev': ('https://testnet4-explorer.wakiyamap.dev/',
                        {'tx': 'tx/', 'addr': 'address/'}),
@@ -1033,7 +1034,7 @@ testnet4_block_explorers = {
 signet_block_explorers = {
     'bc-2.jp': ('https://explorer.bc-2.jp/',
                         {'tx': 'tx/', 'addr': 'address/'}),
-    'mempool.space': ('https://mempool.space/signet/',
+    'bitever2.ever-chain.xyz': ('https://bitever2.ever-chain.xyz/signet/',
                         {'tx': 'tx/', 'addr': 'address/'}),
     'bitcoinexplorer.org': ('https://signet.bitcoinexplorer.org/',
                        {'tx': 'tx/', 'addr': 'address/'}),

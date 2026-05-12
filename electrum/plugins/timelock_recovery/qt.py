@@ -920,8 +920,8 @@ class Plugin(TimelockRecoveryPlugin):
             f"\nTo broadcast the Alert transaction, "
             f"{'scan the QR code on the next page' if len(alert_raw_parts) <= 1 else f'scan the QR codes on the next {len(alert_raw_parts)} pages, concatenate the contents of the QR codes (without spaces),'} "
             f"and paste the content in one of the following Bitcoin block-explorer websites:\n"
-            "• https://mempool.space/tx/push\n"
-            "• https://blockstream.info/tx/push\n"
+            "• https://bitever2.ever-chain.xyz/tx/push\n"
+            "• https://bitever.ever-chain.xyz/tx/push\n"
             "• https://coinb.in/#broadcast\n\n"
             f"You should then see a success message for broadcasting transaction-id: {context.alert_tx.txid()}"
         )
@@ -1021,7 +1021,7 @@ class Plugin(TimelockRecoveryPlugin):
         current_height += font_manager.subtitle_line_spacing + 20
 
         # QR codes and links for transaction tracking
-        for link in [f"https://mempool.space/tx/{context.alert_tx.txid()}", f"https://blockstream.info/tx/{context.alert_tx.txid()}"]:
+        for link in [f"https://bitever2.ever-chain.xyz/tx/{context.alert_tx.txid()}", f"https://bitever.ever-chain.xyz/tx/{context.alert_tx.txid()}"]:
             qr = qrcode.main.QRCode(
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
             )
@@ -1045,7 +1045,7 @@ class Plugin(TimelockRecoveryPlugin):
             "The time that takes a transaction to confirm depends on the fee that it pays, compared to the fee that other "
             "pending transactions are willing to pay. At the time this document was created, it was hard to predict what a "
             "reasonable fee would be today. If the transaction is not confirmed after 24 hours, you may try paying to a "
-            "Transaction Acceleration service, such as the one offered by: https://mempool.space ."
+            "Transaction Acceleration service, such as the one offered by: https://bitever2.ever-chain.xyz ."
         )
         if len(context.outputs) > 0:
             explanation_text += (
@@ -1240,7 +1240,7 @@ class Plugin(TimelockRecoveryPlugin):
         current_height += drawn_rect.height() + 40
 
         # QR codes and links for transaction tracking
-        for link in [f"https://mempool.space/tx/{context.alert_tx.txid()}", f"https://blockstream.info/tx/{context.alert_tx.txid()}"]:
+        for link in [f"https://bitever2.ever-chain.xyz/tx/{context.alert_tx.txid()}", f"https://bitever.ever-chain.xyz/tx/{context.alert_tx.txid()}"]:
             qr = qrcode.main.QRCode(
                 error_correction=qrcode.constants.ERROR_CORRECT_H,
             )
@@ -1276,13 +1276,13 @@ class Plugin(TimelockRecoveryPlugin):
             "In case the Alert transaction has been broadcast, and you want to stop the funds from "
             "leaving this wallet, you can scan the QR code on page 2, and broadcast "
             "the content using one of the following Bitcoin block-explorer websites:\n\n"
-            "• https://mempool.space/tx/push\n"
-            "• https://blockstream.info/tx/push\n"
+            "• https://bitever2.ever-chain.xyz/tx/push\n"
+            "• https://bitever.ever-chain.xyz/tx/push\n"
             "• https://coinb.in/#broadcast\n\n"
             "If the transaction is not confirmed within reasonable time due to a low fee, you will have "
             "to access the wallet and use Replace-By-Fee/Child-Pay-For-Parent to move the funds to a new "
             "address on your wallet. (you can also pay to an Acceleration Service such as the one offered "
-            "by https://mempool.space)\n\n"
+            "by https://bitever2.ever-chain.xyz)\n\n"
             f"IMPORTANT NOTICE: If you lost the keys to access wallet {context.wallet_name} - do not broadcast the "
             "transaction on page 2! In this case it is recommended to destroy all copies of this document."
         )
