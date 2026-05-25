@@ -2,9 +2,9 @@ name: Windows Build Test
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop, "260525" ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop, "260525" ]
   workflow_dispatch: # 수동 실행 가능
 
 jobs:
